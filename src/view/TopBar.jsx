@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components/macro";
 const TopBar = ({ children }) => (
   <Box>
     <Title>{children}</Title>
-    <Logo src="/icons/logo.svg" alt="logo" />
+    <Logo src="https://bi86g.csb.app/icons/logo.svg" alt="logo" />
   </Box>
 );
 

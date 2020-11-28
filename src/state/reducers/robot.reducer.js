@@ -42,8 +42,6 @@ const reducer = (state = initialState, action) => {
     case SELECT_ROBOT:
       return {
         ...state,
-        full_list:  [...state.full_list,action.payload],
-        filtered_list: [...state.full_list,action.payload],
         selected_item: action.payload
       };
     

@@ -74,9 +74,8 @@ const Create = () => {
   return (
     <Wrapper>
       <Title>Create your own bot!</Title>
-
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Label mt="1rem">First Name</Label>
+        <Label mt="1rem">Full Name</Label>
 
         <Box>
           <Input
@@ -86,14 +85,7 @@ const Create = () => {
             ref={register({ required: true, minLength: 2 })}
             error_styled={errors.first_name}
           />
-        </Box>
-        <ErrorMsg show={errors.first_name}>
-          {get_error_msg(errors, error_messages, "first_name")}
-        </ErrorMsg>
-        <Spacer w="1rem" />
-        <Label mt="1rem">Last Name</Label>
-
-        <Box>
+          <Spacer w="1rem" />
           <Input
             type="text"
             placeholder="Last Name"
@@ -102,10 +94,9 @@ const Create = () => {
             error_styled={errors.last_name}
           />
         </Box>
-        <ErrorMsg show={errors.first_name}>
-          {get_error_msg(errors, error_messages, "last_name")}
+        <ErrorMsg show={errors.first_name || errors.last_name}>
+          {get_error_msg(errors, error_messages, ["first_name", "last_name"])}
         </ErrorMsg>
-        <Spacer w="1rem" />
         <LVexpand>
           <Label mt="1rem">Email</Label>
           <ExpandedInput
@@ -116,7 +107,7 @@ const Create = () => {
               minLength: 8,
               pattern: email_regex,
             })}
-            placeholder="email address"
+            placeholder="Email Address"
             error_styled={errors.email}
           />
         </LVexpand>
@@ -152,9 +143,9 @@ const Create = () => {
           <Label mt="1rem">Description</Label>
           <Description
             name="description"
-            ref={register({ required: true, minLength: 3 })}
-            rows="6"
-            placeholder="tell me about the robot..."
+            ref={register({ required: true, minLength: 8 })}
+            rows="4"
+            placeholder="tell me something about the bot..."
             error_styled={errors.description}
           />
         </LVexpand>
@@ -196,19 +187,30 @@ const Box = styled(HBox)`
   /* border: magenta solid 1px; */
   width: 100%;
 `;
+// const Title = styled.h1`
+//   font-family: sans-serif;
+//   font-size: 2.2rem;
+//   margin-bottom: 1rem;
+// `;
 const Title = styled.h1`
-  font-family: sans-serif;
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
+  font-size: 3.8rem;
+  color: slategray;
+  font-family: "Expletus Sans";
+  text-align: left;
+  font-size: 2.8rem;
 `;
 
 const Submit = styled.button`
   width: 100%;
   outline-style: none;
   border-style: none;
-  background: deeppink;
+  background: #344557
+    url(https://unsplash.imgix.net/photo-1423683249427-8ca22bd873e0?fit=crop&fm=jpg&h=700&q=75&w=1050)
+    0 0 no-repeat;
+  background-size: cover;
+
   text-transform: uppercase;
-  color: white;
+  color: #ff8282;
   font-size: 2.2rem;
   /* font-family:'Arial'; */
   padding: 1rem 2rem;
@@ -217,14 +219,14 @@ const Submit = styled.button`
   font-family: "Yanone Kaffeesatz", sans-serif;
 
   &:hover {
-    background: ${darken(0.1, "deeppink")};
+    background: ${darken(0.1, "#ff8282")};
   }
   &:active {
-    background: ${lighten(0.1, "deeppink")};
+    background: ${lighten(0.1, "#ff8282")};
   }
   border: 2px transparent solid;
   &:focus {
-    border: ${darken(0.2, "deeppink")} 2px solid;
+    border: ${darken(0.2, "#ff8282")} 2px solid;
   }
 `;
 const Input = styled.input`
@@ -233,13 +235,13 @@ const Input = styled.input`
   border-radius: 4px;
   padding: 1rem 2rem;
   outline: none;
-  border: 2px ${({ error_styled }) => (error_styled ? "red" : "transparent")}
-    solid;
+  border: 2px
+    ${({ error_styled }) => (error_styled ? "#c51244" : "transparent")} solid;
   background-color: ${({ error_styled }) =>
-    error_styled ? lighten(0.4, "red") : "lightgray"};
-  color: ${({ error_styled }) => (error_styled ? "red" : "slategray")};
+    error_styled ? lighten(0.4, "#c51244") : "lightgray"};
+  color: ${({ error_styled }) => (error_styled ? "#c51244" : "slategray")};
   &::placeholder {
-    color: ${({ error_styled }) => (error_styled ? "red" : "slategray")};
+    color: ${({ error_styled }) => (error_styled ? "#c51244" : "slategray")};
   }
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -250,11 +252,11 @@ const Input = styled.input`
   }
   &:focus {
     border: darkgray 2px solid;
-    border: 2px ${({ error_styled }) => (error_styled ? "red" : "transparent")}
-      solid;
+    border: 2px
+      ${({ error_styled }) => (error_styled ? "#c51244" : "transparent")} solid;
     background-color: ${({ error_styled }) =>
-      error_styled ? lighten(0.4, "red") : "lightgray"};
-    color: ${({ error_styled }) => (error_styled ? "red" : "slategray")};
+      error_styled ? lighten(0.4, "#c51244") : "lightgray"};
+    color: ${({ error_styled }) => (error_styled ? "#c51244" : "slategray")};
   }
 `;
 const LVexpand = styled(LVBox)`
@@ -285,13 +287,13 @@ const Description = styled.textarea`
   font-family: "Arial";
   border-radius: 4px;
   padding: 1rem 2rem;
-  border: 2px ${(p) => (p.error_styled ? "red" : "transparent")} solid;
+  border: 2px ${(p) => (p.error_styled ? "#c51244" : "transparent")} solid;
   outline: none;
   background-color: ${({ error_styled }) =>
-    error_styled ? lighten(0.4, "red") : "lightgray"};
+    error_styled ? lighten(0.4, "#c51244") : "lightgray"};
   color: slategray;
   &::placeholder {
-    color: ${({ error_styled }) => (error_styled ? "red" : "slategray")};
+    color: ${({ error_styled }) => (error_styled ? "#c51244" : "slategray")};
   }
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -316,12 +318,12 @@ const CountrySelectWrap = styled.div`
   &:focus {
     border: darkgray 2px solid;
   }
-  border: 2px ${({ error_styled }) => (error_styled ? "red" : "transparent")}
-    solid;
+  border: 2px
+    ${({ error_styled }) => (error_styled ? "#c51244" : "transparent")} solid;
   background-color: ${({ error_styled }) =>
-    error_styled ? lighten(0.4, "red") : "lightgray"};
+    error_styled ? lighten(0.4, "#c51244") : "lightgray"};
   select {
-    color: ${({ error_styled }) => (error_styled ? "red" : "slategray")};
+    color: ${({ error_styled }) => (error_styled ? "#c51244" : "slategray")};
   }
 `;
 const Select = styled.select`
