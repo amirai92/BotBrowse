@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import shortid from "shortid";
 import { VBox, LVBox, LVForm, HBox } from "../styles/containers";
 import countries from "../data/countries";
-import { createBot, updateList } from "../state/actions/robot.actions";
+import { createBot } from "../state/actions/robot.actions";
 
 const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const error_messages = {
@@ -35,9 +35,7 @@ const error_messages = {
 
 const Create = () => {
   const { register, handleSubmit, errors } = useForm();
-
   const all_robots = useSelector((state) => state.robot);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -84,7 +82,7 @@ const Create = () => {
           <Input
             type="text"
             placeholder="First Name"
-            name="firstname"
+            name="first_name"
             ref={register({ required: true, minLength: 2 })}
             error_styled={errors.first_name}
           />
@@ -99,7 +97,7 @@ const Create = () => {
           <Input
             type="text"
             placeholder="Last Name"
-            name="lastname"
+            name="last_name"
             ref={register({ required: true, minLength: 2 })}
             error_styled={errors.last_name}
           />

@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const Profile = ({ first_name, country, description, avatar, id, email }) => {
-  // console.log(first_name, country, description, avatar);
-  // avatar = avatar.replace("100x100", "300x300");
   return (
     <ProfileBox>
       {avatar ? (

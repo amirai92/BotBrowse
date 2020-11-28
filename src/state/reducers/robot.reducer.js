@@ -15,8 +15,6 @@ export const initialState = {
   selected_item: {}
 };
 const reducer = (state = initialState, action) => {
-  console.log("state reducer", state);
-  console.log("action", action);
   switch (action.type) {
     case LOAD_ROBOT_START:
       return {
@@ -28,30 +26,33 @@ const reducer = (state = initialState, action) => {
         ...initialState,
         full_list: action.payload,
         filtered_list: action.payload,
-        selected_item: action.payload[0]
+        selected_item: action.payload[0],
+        is_loading:false
       };
     case LOAD_ROBOT_FAIL:
       return {
         ...initialState,
         error_msg: action.payload
       };
-    //check here if to add
     case UPDATE_LIST:
       return {
         ...state,
-        filtered_list: action.payload
+        selected_item:action.payload
       };
     case SELECT_ROBOT:
       return {
         ...state,
+        full_list:  [...state.full_list,action.payload],
+        filtered_list: [...state.full_list,action.payload],
         selected_item: action.payload
       };
     
     case CREATE_BOT: 
       return {
         ...state,
-        full_list:  action.payload,
-
+        full_list:  [...state.full_list,action.payload],
+        selected_item: action.payload,
+        filtered_list: [...state.full_list,action.payload]
       };
     
     default:

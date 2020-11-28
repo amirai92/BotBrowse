@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import List from "./BotList";
 import Filter from "./BotFilter";
@@ -8,18 +8,16 @@ import { loadRobots } from "../state/actions/robot.actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 const Browse = () => {
-  const inited = useRef(false);
   const dispatch = useDispatch();
-  const { is_loading, error_msg, selected_item } = useSelector(
+  const { is_loading, error_msg, selected_item, full_list } = useSelector(
     (state) => state.robot
   );
 
   useEffect(() => {
-    if (inited.current === false) {
-      inited.current = true;
+    if (full_list === undefined || full_list.length === 0) {
       dispatch(loadRobots());
     }
-  }, [dispatch]);
+  }, [dispatch, full_list]);
 
   if (is_loading)
     return (
